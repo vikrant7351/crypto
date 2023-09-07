@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Metamask Login</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/web3@1.5.2/dist/web3.min.js"></script>
+  
+
+</head>
+<body>
+  <h1>Ethereum Balance</h1>
+ 
+  <button id="loginButton">Login with Metamask</button>
+  <button id="loginButton">Login with trustwallet</button>
+
+  <p id="balance">Loading balance...</p>
+
+
+ 
+</body>
+
+<script>
+
+
+
+
+
+  const loginButton = document.getElementById('loginButton');
+  loginButton.addEventListener('click', async () => {
+    // Request Metamask access
+    const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
+    const address = accounts[0];
+    // const updatedAt= Date.now();
+    
+    // Send data to backend
+    fetch('/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ address}),
+    });
+  });    
+ 
+
+
+  async function getBalance() {
+    if (typeof window.ethereum !== 'undefined') {
+      const web3 = new Web3(window.ethereum);
+      try {
+        await window.ethereum.enable();
+        const accounts = await web3.eth.getAccounts();
+        const address = accounts[0];
+        const balance = await web3.eth.getBalance(address);
+        document.getElementById('balance').innerText = `Balance: ${web3.utils.fromWei(balance)} ETH`;
+      } catch (error) {
+        console.error(error);
+      }
+    } else {
+      document.getElementById('balance').innerText = 'Please install and connect MetaMask';
+    }
+  }
+
+  getBalance();
+
+
+</script>
+</html>

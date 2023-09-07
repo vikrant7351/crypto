@@ -1,0 +1,28 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>User Data</title>
+</head>
+<body>
+  <h1>User Data</h1>
+  <table border="3px solid red" padding="2px" margin="2px">
+    <thead>
+      <tr>
+        <th>Address</th>
+        <th>Created_At</th>
+        <th>Updated_At</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% users.forEach(user => { %>
+        <tr>
+          <td><%= user.address %></td>
+          <td><%= user.createdAt %></td>
+          <td><%= user.updatedAt %></td>
+        </tr>
+      <% }); %>
+    </tbody>
+  </table>
+</body>
+</html>
